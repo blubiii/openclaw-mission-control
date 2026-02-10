@@ -19,6 +19,44 @@ app.use(express.static('public'));
 app.use('/data', express.static('data'));
 
 const CRON_FILE = path.join(process.env.HOME || '/root', '.openclaw', 'cron', 'jobs.json');
+const SESSIONS_DIR = path.join(process.env.HOME || '/root', '.openclaw', 'agents');
+
+// Get all agents (sessions)
+app.get('/api/agents', (req, res) => {
+  try {
+    if (!fs.existsSync(SESSIONS_DIR)) {
+      return res.json({ agents: [] });
+    }
+    
+    const agents = [];
+    const dirs = fs.readdirSync(SESSIONS_DIR);
+    
+    for (const dir of dirs) {
+      const sessionPath = path.join(SESSIONS_DIR, dir, 'session');
+      const metaFile = path.join(sessionPath, 'meta.json');
+      
+      if (fs.existsSync(metaFile)) {
+        try {
+          const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'));
+          agents.push({
+            id: dir,
+            kind: meta.kind || 'unknown',
+            label: meta.label || dir,
+            created: meta.createdAt,
+            updated: meta.updatedAt
+          });
+        } catch (err) {
+          console.error(`Error reading ${metaFile}:`, err.message);
+        }
+      }
+    }
+    
+    res.json({ agents });
+  } catch (error) {
+    console.error('Error reading agents:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Get all cron jobs
 app.get('/api/cron/jobs', (req, res) => {

@@ -268,33 +268,108 @@
       background: #0a0a0a;
       border: 1px solid #1a1a1a;
       border-radius: 16px;
-      padding: 32px;
-      max-width: 700px;
+      padding: 0;
+      max-width: 600px;
       width: 100%;
-      max-height: 80vh;
+      max-height: 85vh;
       overflow-y: auto;
+      position: relative;
     }
     
     .modal-header {
       display: flex;
       justify-content: space-between;
-      align-items: start;
-      margin-bottom: 24px;
-      padding-bottom: 20px;
+      align-items: center;
+      padding: 24px 28px;
       border-bottom: 1px solid #1a1a1a;
+      position: sticky;
+      top: 0;
+      background: #0a0a0a;
+      z-index: 10;
     }
     
     .modal-title {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
+      flex: 1;
+    }
+    
+    .modal-actions-top {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    
+    .action-menu {
+      position: relative;
+    }
+    
+    .action-menu-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid #1a1a1a;
+      color: #888;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .action-menu-btn:hover {
+      background: #111;
+      border-color: #333;
+      color: #fff;
+    }
+    
+    .action-menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 4px;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      min-width: 150px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
+    
+    .action-menu-dropdown.show {
+      display: block;
+    }
+    
+    .action-menu-item {
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    
+    .action-menu-item:last-child {
+      border-bottom: none;
+    }
+    
+    .action-menu-item:hover {
+      background: #111;
+    }
+    
+    .action-menu-item.danger {
+      color: #f55;
     }
     
     .modal-close {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
-      background: #111;
+      border-radius: 6px;
+      background: transparent;
       border: 1px solid #1a1a1a;
       color: #888;
       font-size: 20px;
@@ -306,54 +381,84 @@
     }
     
     .modal-close:hover {
-      background: #1a1a1a;
+      background: #111;
+      border-color: #333;
       color: #fff;
     }
     
     .modal-body {
+      padding: 28px;
+    }
+    
+    .detail-section {
       margin-bottom: 24px;
     }
     
-    .detail-row {
-      padding: 16px 0;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    
-    .detail-row:last-child {
-      border-bottom: none;
+    .detail-section:last-child {
+      margin-bottom: 0;
     }
     
     .detail-label {
-      font-size: 11px;
+      font-size: 10px;
       color: #666;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 8px;
-      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      font-weight: 700;
     }
     
     .detail-value {
       font-size: 14px;
       color: #fff;
+      background: #000;
+      border: 1px solid #1a1a1a;
+      padding: 12px 16px;
+      border-radius: 8px;
       line-height: 1.5;
     }
     
-    .detail-value pre {
-      background: #000;
-      border: 1px solid #1a1a1a;
-      padding: 12px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-family: 'SF Mono', Monaco, monospace;
-      font-size: 12px;
-      color: #aaa;
+    .detail-value.description {
+      min-height: 60px;
     }
     
-    .modal-actions {
+    .activity-log {
+      background: #000;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 0;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .activity-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 13px;
+    }
+    
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+    
+    .activity-time {
+      color: #666;
+      font-size: 11px;
+      margin-bottom: 4px;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    
+    .activity-text {
+      color: #fff;
+    }
+    
+    .modal-footer {
+      padding: 20px 28px;
+      border-top: 1px solid #1a1a1a;
       display: flex;
       gap: 12px;
-      padding-top: 24px;
-      border-top: 1px solid #1a1a1a;
+      position: sticky;
+      bottom: 0;
+      background: #0a0a0a;
     }
     
     .btn {
@@ -365,30 +470,31 @@
       cursor: pointer;
       transition: all 0.2s;
       border: 1px solid;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #888;
+      border-color: #1a1a1a;
+    }
+    
+    .btn-secondary:hover {
+      background: #111;
+      border-color: #333;
+      color: #fff;
     }
     
     .btn-primary {
-      background: #1a1a1a;
-      color: #fff;
-      border-color: #333;
+      background: #fff;
+      color: #000;
+      border-color: #fff;
     }
     
     .btn-primary:hover {
-      background: #222;
-      border-color: #444;
-    }
-    
-    .btn-danger {
-      background: rgba(200, 0, 0, 0.1);
-      color: #f55;
-      border-color: rgba(200, 0, 0, 0.3);
-    }
-    
-    .btn-danger:hover {
-      background: rgba(200, 0, 0, 0.2);
-      border-color: rgba(200, 0, 0, 0.5);
+      background: #e0e0e0;
+      border-color: #e0e0e0;
     }
     
     .loading {
@@ -407,67 +513,50 @@
       font-size: 13px;
     }
     
-    /* Jobs Section */
-    .jobs-section {
-      margin-top: 48px;
-      padding-top: 32px;
-      border-top: 1px solid #1a1a1a;
-    }
-    
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 20px;
-    }
-    
-    .jobs-grid {
+    /* Agents & Schedule Grids */
+    .data-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 16px;
     }
     
-    .job-card {
+    .data-card {
       background: #0a0a0a;
       border: 1px solid #1a1a1a;
       border-radius: 10px;
       padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       cursor: pointer;
       transition: all 0.2s;
     }
     
-    .job-card:hover {
+    .data-card:hover {
       background: #0f0f0f;
       border-color: #333;
+      transform: translateY(-2px);
     }
     
-    .job-info {
-      flex: 1;
-    }
-    
-    .job-name {
-      font-size: 13px;
+    .data-card-title {
+      font-size: 14px;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     
-    .job-schedule {
+    .data-card-meta {
       font-size: 11px;
       color: #666;
       font-family: 'SF Mono', Monaco, monospace;
     }
     
-    .job-status {
+    .status-badge {
+      display: inline-block;
       padding: 4px 10px;
       border-radius: 6px;
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      margin-left: 8px;
     }
     
     .status-enabled {
@@ -578,7 +667,8 @@
           <h1 class="page-title">Agents</h1>
         </div>
         <div id="agents-loading" class="loading">Loading agents...</div>
-        <div id="agents-content" style="display: none;"></div>
+        <div id="agents-content" class="data-grid" style="display: none;"></div>
+        <div id="agents-empty" class="empty" style="display: none;">No active agents</div>
       </div>
       
       <!-- Schedule Page -->
@@ -587,7 +677,8 @@
           <h1 class="page-title">Schedule</h1>
         </div>
         <div id="schedule-loading" class="loading">Loading schedule...</div>
-        <div id="schedule-content" style="display: none;"></div>
+        <div id="schedule-content" class="data-grid" style="display: none;"></div>
+        <div id="schedule-empty" class="empty" style="display: none;">No scheduled jobs</div>
       </div>
       
       <!-- Settings Page -->
@@ -606,16 +697,30 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="modal-title"></h2>
-        <button class="modal-close" onclick="closeModal()">×</button>
+        <div class="modal-actions-top">
+          <div class="action-menu">
+            <button class="action-menu-btn" onclick="toggleActionMenu(event)">⋯</button>
+            <div class="action-menu-dropdown" id="action-menu">
+              <div class="action-menu-item" onclick="hideTask()">Hide Task</div>
+              <div class="action-menu-item danger" onclick="deleteTask()">Delete Task</div>
+            </div>
+          </div>
+          <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
       </div>
       <div class="modal-body" id="modal-body"></div>
-      <div class="modal-actions" id="modal-actions"></div>
+      <div class="modal-footer" id="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" onclick="executeTask()">Execute Task</button>
+      </div>
     </div>
   </div>
   
   <script>
     let allTasks = [];
     let allJobs = [];
+    let allAgents = [];
+    let currentModalItem = null;
     
     // Navigation
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -673,7 +778,7 @@
                   <div class="task-card-title">${task.title}</div>
                   <div class="task-card-desc">${task.description}</div>
                   <div class="task-card-footer">
-                    <span class="task-date">${new Date(task.updatedAt).toLocaleDateString()}</span>
+                    <span class="task-date">${formatDate(task.updatedAt)}</span>
                     <svg class="task-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <circle cx="12" cy="12" r="10"></circle>
                       <path d="M12 16v-4M12 8h.01"></path>
@@ -691,40 +796,165 @@
       const task = allTasks.find(t => t.id === taskId);
       if (!task) return;
       
+      currentModalItem = { type: 'task', data: task };
+      
       document.getElementById('modal-title').textContent = task.title;
       document.getElementById('modal-body').innerHTML = `
-        <div class="detail-row">
-          <div class="detail-label">Description</div>
-          <div class="detail-value">${task.description}</div>
-        </div>
-        <div class="detail-row">
+        <div class="detail-section">
           <div class="detail-label">Status</div>
           <div class="detail-value">${task.status.replace('_', ' ').toUpperCase()}</div>
         </div>
-        <div class="detail-row">
-          <div class="detail-label">Priority</div>
-          <div class="detail-value">${task.priority.toUpperCase()}</div>
+        
+        <div class="detail-section">
+          <div class="detail-label">Description</div>
+          <div class="detail-value description">${task.description}</div>
         </div>
-        <div class="detail-row">
+        
+        <div class="detail-section">
           <div class="detail-label">Created</div>
-          <div class="detail-value">${new Date(task.createdAt).toLocaleString()}</div>
+          <div class="detail-value">${formatDateTime(task.createdAt)}</div>
         </div>
-        <div class="detail-row">
-          <div class="detail-label">Updated</div>
-          <div class="detail-value">${new Date(task.updatedAt).toLocaleString()}</div>
+        
+        <div class="detail-section">
+          <div class="detail-label">Last Updated</div>
+          <div class="detail-value">${formatDateTime(task.updatedAt)}</div>
+        </div>
+        
+        <div class="detail-section">
+          <div class="detail-label">Activity Log</div>
+          <div class="activity-log">
+            <div class="activity-item">
+              <div class="activity-time">${formatDateTime(task.createdAt)}</div>
+              <div class="activity-text">Task created</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">${formatDateTime(task.updatedAt)}</div>
+              <div class="activity-text">Status: ${task.status.replace('_', ' ')}</div>
+            </div>
+          </div>
         </div>
       `;
-      document.getElementById('modal-actions').innerHTML = `
-        <button class="btn btn-primary" onclick="closeModal()">Close</button>
+      
+      document.getElementById('modal-footer').innerHTML = `
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" onclick="executeTask()">Execute Task</button>
       `;
+      
       document.getElementById('modal').classList.add('show');
+    }
+    
+    function showJobDetail(jobId) {
+      const job = allJobs.find(j => j.id === jobId);
+      if (!job) return;
+      
+      currentModalItem = { type: 'job', data: job };
+      
+      document.getElementById('modal-title').textContent = job.name || 'Cron Job';
+      document.getElementById('modal-body').innerHTML = `
+        <div class="detail-section">
+          <div class="detail-label">Job ID</div>
+          <div class="detail-value" style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px;">${job.id}</div>
+        </div>
+        
+        <div class="detail-section">
+          <div class="detail-label">Schedule</div>
+          <div class="detail-value">${formatSchedule(job.schedule)}</div>
+        </div>
+        
+        <div class="detail-section">
+          <div class="detail-label">Session Target</div>
+          <div class="detail-value">${job.sessionTarget || 'N/A'}</div>
+        </div>
+        
+        <div class="detail-section">
+          <div class="detail-label">Status</div>
+          <div class="detail-value">${job.enabled ? 'ENABLED' : 'DISABLED'}</div>
+        </div>
+        
+        <div class="detail-section">
+          <div class="detail-label">Payload</div>
+          <div class="detail-value" style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; white-space: pre-wrap;">${JSON.stringify(job.payload, null, 2)}</div>
+        </div>
+      `;
+      
+      document.getElementById('modal-footer').innerHTML = `
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button class="btn btn-primary" onclick="deleteJob()">Delete Job</button>
+      `;
+      
+      document.getElementById('modal').classList.add('show');
+    }
+    
+    function toggleActionMenu(event) {
+      event.stopPropagation();
+      const dropdown = document.getElementById('action-menu');
+      dropdown.classList.toggle('show');
+    }
+    
+    function hideTask() {
+      document.getElementById('action-menu').classList.remove('show');
+      alert('Hide task functionality coming soon');
+    }
+    
+    function deleteTask() {
+      document.getElementById('action-menu').classList.remove('show');
+      if (confirm('Delete this task permanently?')) {
+        alert('Delete task functionality coming soon');
+        closeModal();
+      }
+    }
+    
+    function executeTask() {
+      if (currentModalItem && currentModalItem.type === 'task') {
+        alert('Execute task: ' + currentModalItem.data.title);
+      }
+    }
+    
+    async function deleteJob() {
+      if (!currentModalItem || currentModalItem.type !== 'job') return;
+      
+      if (!confirm('Delete this job? A backup will be created.')) return;
+      
+      try {
+        const response = await fetch(`/api/cron/jobs/${currentModalItem.data.id}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Failed to delete');
+        alert('Job deleted successfully');
+        closeModal();
+        if (window.scheduleLoaded) loadSchedule();
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
     }
     
     async function loadAgents() {
       window.agentsLoaded = true;
-      document.getElementById('agents-loading').style.display = 'none';
-      document.getElementById('agents-content').style.display = 'block';
-      document.getElementById('agents-content').innerHTML = '<div class="empty">No active agents</div>';
+      try {
+        const response = await fetch('/api/agents');
+        const data = await response.json();
+        allAgents = data.agents || [];
+        
+        document.getElementById('agents-loading').style.display = 'none';
+        
+        if (allAgents.length === 0) {
+          document.getElementById('agents-empty').style.display = 'block';
+          return;
+        }
+        
+        const container = document.getElementById('agents-content');
+        container.style.display = 'grid';
+        
+        container.innerHTML = allAgents.map(agent => `
+          <div class="data-card">
+            <div class="data-card-title">${agent.label || agent.id}</div>
+            <div class="data-card-meta">
+              ${agent.kind} • Created ${formatDate(agent.created)}
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('agents-loading').textContent = 'ERROR: ' + error.message;
+      }
     }
     
     async function loadSchedule() {
@@ -735,89 +965,30 @@
         allJobs = data.jobs || [];
         
         document.getElementById('schedule-loading').style.display = 'none';
-        const container = document.getElementById('schedule-content');
-        container.style.display = 'block';
         
         if (allJobs.length === 0) {
-          container.innerHTML = '<div class="empty">No scheduled jobs</div>';
+          document.getElementById('schedule-empty').style.display = 'block';
           return;
         }
         
-        container.innerHTML = `
-          <div class="jobs-grid">
-            ${allJobs.map(job => `
-              <div class="job-card" onclick="showJobDetail('${job.id}')">
-                <div class="job-info">
-                  <div class="job-name">${job.name || 'Unnamed Job'}</div>
-                  <div class="job-schedule">${formatSchedule(job.schedule)}</div>
-                </div>
-                <span class="job-status status-${job.enabled ? 'enabled' : 'disabled'}">
-                  ${job.enabled ? 'Active' : 'Disabled'}
-                </span>
-              </div>
-            `).join('')}
+        const container = document.getElementById('schedule-content');
+        container.style.display = 'grid';
+        
+        container.innerHTML = allJobs.map(job => `
+          <div class="data-card" onclick="showJobDetail('${job.id}')">
+            <div class="data-card-title">
+              ${job.name || 'Unnamed Job'}
+              <span class="status-badge status-${job.enabled ? 'enabled' : 'disabled'}">
+                ${job.enabled ? 'Active' : 'Disabled'}
+              </span>
+            </div>
+            <div class="data-card-meta">${formatSchedule(job.schedule)}</div>
           </div>
-        `;
+        `).join('');
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('schedule-loading').textContent = 'ERROR: ' + error.message;
       }
-    }
-    
-    function showJobDetail(jobId) {
-      const job = allJobs.find(j => j.id === jobId);
-      if (!job) return;
-      
-      document.getElementById('modal-title').textContent = job.name || 'Cron Job';
-      document.getElementById('modal-body').innerHTML = `
-        <div class="detail-row">
-          <div class="detail-label">Job ID</div>
-          <div class="detail-value"><pre>${job.id}</pre></div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Schedule</div>
-          <div class="detail-value">${formatSchedule(job.schedule)}</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Session Target</div>
-          <div class="detail-value">${job.sessionTarget || 'N/A'}</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Status</div>
-          <div class="detail-value">${job.enabled ? 'ENABLED' : 'DISABLED'}</div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-label">Payload</div>
-          <div class="detail-value"><pre>${JSON.stringify(job.payload, null, 2)}</pre></div>
-        </div>
-      `;
-      document.getElementById('modal-actions').innerHTML = `
-        <button class="btn btn-primary" onclick="closeModal()">Close</button>
-        <button class="btn btn-danger" onclick="deleteJob('${job.id}')">Delete</button>
-      `;
-      document.getElementById('modal').classList.add('show');
-    }
-    
-    async function deleteJob(jobId) {
-      if (!confirm('Delete this job? A backup will be created.')) return;
-      
-      try {
-        const response = await fetch(`/api/cron/jobs/${jobId}`, { method: 'DELETE' });
-        if (!response.ok) throw new Error('Failed to delete');
-        alert('Job deleted successfully');
-        closeModal();
-        loadSchedule();
-      } catch (error) {
-        alert('Error: ' + error.message);
-      }
-    }
-    
-    function formatSchedule(schedule) {
-      if (!schedule) return 'N/A';
-      if (schedule.kind === 'cron') return schedule.expr;
-      if (schedule.kind === 'every') return `Every ${schedule.everyMs / 1000}s`;
-      if (schedule.kind === 'at') return new Date(schedule.at).toLocaleString();
-      return 'Unknown';
     }
     
     async function loadSettings() {
@@ -863,12 +1034,42 @@
       }
     }
     
-    function closeModal() {
-      document.getElementById('modal').classList.remove('show');
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString();
     }
     
+    function formatDateTime(dateStr) {
+      if (!dateStr) return 'N/A';
+      const date = new Date(dateStr);
+      const dateStr2 = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+      const timeStr = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+      return `${dateStr2}, ${timeStr}`;
+    }
+    
+    function formatSchedule(schedule) {
+      if (!schedule) return 'N/A';
+      if (schedule.kind === 'cron') return schedule.expr;
+      if (schedule.kind === 'every') return `Every ${schedule.everyMs / 1000}s`;
+      if (schedule.kind === 'at') return new Date(schedule.at).toLocaleString();
+      return 'Unknown';
+    }
+    
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+      document.getElementById('action-menu').classList.remove('show');
+      currentModalItem = null;
+    }
+    
+    // Close modal on outside click
     document.getElementById('modal').addEventListener('click', (e) => {
       if (e.target.id === 'modal') closeModal();
+    });
+    
+    // Close action menu when clicking outside
+    document.addEventListener('click', () => {
+      document.getElementById('action-menu').classList.remove('show');
     });
     
     // Initial load
