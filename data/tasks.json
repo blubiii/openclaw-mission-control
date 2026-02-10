@@ -1,0 +1,121 @@
+{
+  "tasks": [
+    {
+      "id": "amplitude-analysis",
+      "title": "Complete Amplitude Cross-App Analysis",
+      "description": "Comprehensive analysis of Routinely, VYRA, SPF. Investigate Jan 22 MRR spike catalyst - CRITICAL for understanding what drives revenue",
+      "status": "in_progress",
+      "priority": "high",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "spf-analysis",
+      "title": "Deep Dive SPF Conversion Funnels",
+      "description": "Analyze conversion funnels and pricing for SPF app (highest revenue at $8,873/mo - 75% of total MRR)",
+      "status": "not_started",
+      "priority": "high",
+      "createdAt": "2026-02-08T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "marketing-brainstorm",
+      "title": "Brainstorm Marketing Help for Consumer Apps",
+      "description": "Research and propose marketing strategies for app growth - direct path to revenue increase",
+      "status": "not_started",
+      "priority": "high",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "routinely-ua",
+      "title": "Switch Routinely to FB/IG Ads",
+      "description": "UGC agency too expensive at $1.36 CPI. Target < $0.60 CPI with FB ads for better unit economics",
+      "status": "ready_to_review",
+      "priority": "medium",
+      "createdAt": "2026-02-08T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "notification-tactician",
+      "title": "Deploy Notification Tactician Tool",
+      "description": "Evidence-based notification generator with blupalms branding - built and ready for Railway deployment",
+      "status": "ready_to_review",
+      "priority": "medium",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-02-09T18:00:00.000Z"
+    },
+    {
+      "id": "paywall-health-monitor",
+      "title": "Build Paywall Health Monitor",
+      "description": "6-hour cron job to monitor paywall performance across all apps",
+      "status": "not_started",
+      "priority": "medium",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "openclaw-dashboard",
+      "title": "Enhance LaboratoryOS Control Center",
+      "description": "Add clickable task drill-down with detailed logs, laboratory section improvements",
+      "status": "in_progress",
+      "priority": "medium",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "csv-import",
+      "title": "Import 30-day Metrics to Google Sheet",
+      "description": "30-day conversion metrics awaiting CSV import to Google Sheet",
+      "status": "pending_input",
+      "priority": "low",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "project-mgmt-agent",
+      "title": "Create Project Management Agent",
+      "description": "Pending email instructions and approval from Selden",
+      "status": "pending_input",
+      "priority": "low",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "granola-access",
+      "title": "Get Granola Meeting Transcripts Access",
+      "description": "Need access to meeting transcripts tool for client communication",
+      "status": "not_started",
+      "priority": "low",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-09T20:52:00.000Z"
+    },
+    {
+      "id": "mrr-dashboard",
+      "title": "BluBuilds MRR Dashboard",
+      "description": "Railway deployment and public access - DEPLOYED at https://blubuilds-mrr-dashboard-production-d456.up.railway.app",
+      "status": "completed",
+      "priority": "high",
+      "createdAt": "2026-02-08T00:00:00.000Z",
+      "updatedAt": "2026-02-09T12:00:00.000Z"
+    },
+    {
+      "id": "jarvis-tester",
+      "title": "JARVIS A/B Testing Tool",
+      "description": "Tony Stark-themed statistical calculator - SHIPPED at http://192.168.4.80:3000",
+      "status": "completed",
+      "priority": "high",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-08T00:00:00.000Z"
+    },
+    {
+      "id": "superwall-master-agent",
+      "title": "Superwall Master Agent",
+      "description": "Specialized monetization operator with daily proactive analysis - DEPLOYED",
+      "status": "completed",
+      "priority": "high",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-02-09T12:00:00.000Z"
+    }
+  ]
+}
