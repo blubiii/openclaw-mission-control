@@ -15,6 +15,9 @@ app.use(basicAuth({
 app.use(express.json());
 app.use(express.static('public'));
 
+// Serve data folder
+app.use('/data', express.static('data'));
+
 const CRON_FILE = path.join(process.env.HOME || '/root', '.openclaw', 'cron', 'jobs.json');
 
 // Get all cron jobs
