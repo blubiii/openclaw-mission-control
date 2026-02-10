@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mission Control - OpenClaw Dashboard</title>
+  <title>LaboratoryOS • Control Center</title>
   <style>
     * {
       margin: 0;
@@ -12,174 +12,248 @@
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #0a0a0a;
+      color: #e8e8e8;
       min-height: 100vh;
-      padding: 20px;
+      padding: 32px 20px;
     }
     
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
     
     header {
-      text-align: center;
-      color: white;
-      margin-bottom: 40px;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #1a1a1a;
     }
     
     h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+      color: #ffffff;
     }
     
     .subtitle {
-      font-size: 1.2rem;
-      opacity: 0.9;
+      font-size: 15px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+    
+    .system-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 6px 14px;
+      background: #0d1a0d;
+      border: 1px solid #1a3a1a;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #6eff6e;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #6eff6e;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
     
     .jobs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 20px;
     }
     
     .job-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 24px;
+      transition: all 0.2s;
     }
     
     .job-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+      border-color: #3a3a3a;
+      transform: translateY(-2px);
     }
     
     .job-header {
       display: flex;
       justify-content: space-between;
       align-items: start;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
+      gap: 12px;
     }
     
     .job-name {
-      font-size: 1.3rem;
+      font-size: 17px;
       font-weight: 600;
-      color: #333;
+      color: #fff;
+      line-height: 1.3;
+      flex: 1;
     }
     
     .job-status {
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
     }
     
     .status-enabled {
-      background: #d4edda;
-      color: #155724;
+      background: #0d1a0d;
+      border: 1px solid #1a3a1a;
+      color: #6eff6e;
     }
     
     .status-disabled {
-      background: #f8d7da;
-      color: #721c24;
+      background: #1a0d0d;
+      border: 1px solid #3a1a1a;
+      color: #ff6e6e;
     }
     
     .job-details {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     
     .detail-row {
       display: flex;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
+      margin-bottom: 10px;
+      font-size: 13px;
+      line-height: 1.5;
     }
     
     .detail-label {
       font-weight: 600;
       color: #666;
-      min-width: 80px;
+      min-width: 90px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 11px;
     }
     
     .detail-value {
-      color: #333;
+      color: #ccc;
       flex: 1;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      font-size: 12px;
     }
     
     .schedule-badge {
       display: inline-block;
-      background: #e3f2fd;
-      color: #1565c0;
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      color: #3a7bff;
       padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      border-radius: 4px;
+      font-size: 12px;
       font-weight: 500;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
     }
     
     .action-text {
-      background: #f5f5f5;
-      padding: 10px;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      padding: 12px;
       border-radius: 6px;
-      font-size: 0.85rem;
-      color: #555;
-      margin-top: 10px;
-      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      color: #888;
+      margin-top: 12px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
     
     .job-actions {
       display: flex;
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #1a1a1a;
     }
     
     .btn {
       flex: 1;
-      padding: 8px 16px;
-      border: none;
+      padding: 10px 18px;
+      border: 1px solid #2a2a2a;
       border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
+      background: #0a0a0a;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .btn:hover {
+      border-color: #3a3a3a;
+      background: #141414;
+      color: #fff;
     }
     
     .btn-delete {
-      background: #dc3545;
-      color: white;
+      border-color: #3a1a1a;
+      color: #ff6e6e;
     }
     
     .btn-delete:hover {
-      background: #c82333;
+      background: #1a0d0d;
+      border-color: #5a2a2a;
     }
     
     .btn-details {
-      background: #6c757d;
-      color: white;
+      border-color: #1a2a3a;
+      color: #6e9eff;
     }
     
     .btn-details:hover {
-      background: #5a6268;
+      background: #0d1a1a;
+      border-color: #2a3a4a;
     }
     
     .empty-state {
       text-align: center;
-      padding: 60px 20px;
-      color: white;
+      padding: 80px 20px;
+      color: #666;
     }
     
     .empty-state h2 {
-      font-size: 2rem;
+      font-size: 24px;
       margin-bottom: 10px;
+      color: #888;
     }
     
     .loading {
       text-align: center;
-      color: white;
-      font-size: 1.5rem;
-      padding: 60px;
+      color: #666;
+      font-size: 15px;
+      padding: 80px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
     
     .modal {
@@ -189,7 +263,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.85);
       z-index: 1000;
       align-items: center;
       justify-content: center;
@@ -200,56 +274,84 @@
     }
     
     .modal-content {
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 600px;
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 32px;
+      max-width: 700px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
     }
     
     .modal-header {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1a1a1a;
     }
     
     .modal-title {
-      font-size: 1.5rem;
-      color: #333;
+      font-size: 20px;
+      color: #fff;
+      font-weight: 600;
     }
     
     .modal-close {
       float: right;
-      font-size: 1.5rem;
+      font-size: 24px;
       cursor: pointer;
-      color: #999;
+      color: #666;
+      line-height: 1;
+      margin-top: -4px;
     }
     
     .modal-close:hover {
-      color: #333;
+      color: #fff;
     }
     
     pre {
-      background: #f5f5f5;
-      padding: 15px;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      padding: 16px;
       border-radius: 6px;
       overflow-x: auto;
-      font-size: 0.85rem;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #ccc;
+      font-family: 'SF Mono', Monaco, Consolas, monospace;
+    }
+    
+    @media (max-width: 768px) {
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      h1 {
+        font-size: 32px;
+      }
+      
+      .job-card {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>🎯 Mission Control</h1>
-      <p class="subtitle">OpenClaw Cron Job Dashboard</p>
+      <h1>🧪 LaboratoryOS</h1>
+      <p class="subtitle">Cron Control Center</p>
+      <div class="system-status">
+        <span class="status-dot"></span>
+        <span>System Online</span>
+      </div>
     </header>
     
     <div id="loading" class="loading">Loading jobs...</div>
     <div id="jobs-container" class="jobs-grid" style="display: none;"></div>
     <div id="empty-state" class="empty-state" style="display: none;">
-      <h2>No Cron Jobs</h2>
-      <p>No scheduled jobs found in the system.</p>
+      <h2>No Active Jobs</h2>
+      <p>No scheduled cron jobs found in the system.</p>
     </div>
   </div>
   
@@ -281,7 +383,7 @@
         }
       } catch (error) {
         console.error('Error loading jobs:', error);
-        document.getElementById('loading').textContent = 'Error loading jobs: ' + error.message;
+        document.getElementById('loading').textContent = 'ERROR: ' + error.message;
       }
     }
     
@@ -294,29 +396,27 @@
           <div class="job-header">
             <div class="job-name">${job.name || 'Unnamed Job'}</div>
             <div class="job-status ${job.enabled ? 'status-enabled' : 'status-disabled'}">
-              ${job.enabled ? 'Enabled' : 'Disabled'}
+              ${job.enabled ? 'Active' : 'Disabled'}
             </div>
           </div>
           
           <div class="job-details">
             <div class="detail-row">
-              <span class="detail-label">ID:</span>
+              <span class="detail-label">ID</span>
               <span class="detail-value">${job.id}</span>
             </div>
             <div class="detail-row">
-              <span class="detail-label">Schedule:</span>
+              <span class="detail-label">Schedule</span>
               <span class="detail-value">
                 <span class="schedule-badge">${formatSchedule(job.schedule)}</span>
               </span>
             </div>
             <div class="detail-row">
-              <span class="detail-label">Session:</span>
+              <span class="detail-label">Session</span>
               <span class="detail-value">${job.sessionTarget || 'N/A'}</span>
             </div>
             ${job.payload ? `
-              <div class="action-text">
-                ${formatPayload(job.payload)}
-              </div>
+              <div class="action-text">${formatPayload(job.payload)}</div>
             ` : ''}
           </div>
           
@@ -338,9 +438,9 @@
     
     function formatPayload(payload) {
       if (!payload) return 'N/A';
-      if (payload.kind === 'systemEvent') return `Event: ${payload.text?.substring(0, 80)}${payload.text?.length > 80 ? '...' : ''}`;
-      if (payload.kind === 'agentTurn') return `Agent: ${payload.message?.substring(0, 80)}${payload.message?.length > 80 ? '...' : ''}`;
-      return JSON.stringify(payload).substring(0, 80) + '...';
+      if (payload.kind === 'systemEvent') return `Event: ${payload.text?.substring(0, 100)}${payload.text?.length > 100 ? '...' : ''}`;
+      if (payload.kind === 'agentTurn') return `Agent: ${payload.message?.substring(0, 100)}${payload.message?.length > 100 ? '...' : ''}`;
+      return JSON.stringify(payload).substring(0, 100) + '...';
     }
     
     function showDetails(jobId) {
@@ -357,7 +457,7 @@
     }
     
     async function deleteJob(jobId) {
-      if (!confirm('Are you sure you want to delete this job? A backup will be created.')) {
+      if (!confirm('Delete this job? A backup will be created.')) {
         return;
       }
       
@@ -370,21 +470,18 @@
           throw new Error('Failed to delete job');
         }
         
-        // Reload jobs
         await loadJobs();
       } catch (error) {
-        alert('Error deleting job: ' + error.message);
+        alert('Error: ' + error.message);
       }
     }
     
-    // Close modal on outside click
     document.getElementById('modal').addEventListener('click', (e) => {
       if (e.target.id === 'modal') {
         closeModal();
       }
     });
     
-    // Load jobs on page load
     loadJobs();
   </script>
 </body>
