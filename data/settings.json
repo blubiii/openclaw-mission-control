@@ -1,0 +1,13 @@
+{
+  "interface": {
+    "proactiveMode": true,
+    "notificationStyle": "summary",
+    "responseLength": "concise"
+  },
+  "cadence": {
+    "heartbeatInterval": 30,
+    "dailySummaryTime": "08:00",
+    "quietHoursStart": "23:00",
+    "quietHoursEnd": "08:00"
+  }
+}
