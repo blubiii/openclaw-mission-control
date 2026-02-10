@@ -67,7 +67,7 @@
       font-size: 13px;
       font-weight: 500;
       color: #888;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -76,6 +76,7 @@
     .nav-item:hover {
       background: #111;
       color: #fff;
+      transform: translateX(2px);
     }
     
     .nav-item.active {
@@ -87,6 +88,7 @@
       width: 16px;
       height: 16px;
       opacity: 0.6;
+      transition: opacity 0.2s ease;
     }
     
     .nav-item.active .nav-icon {
@@ -128,10 +130,16 @@
     
     .page {
       display: none;
+      animation: fadeIn 0.3s ease;
     }
     
     .page.active {
       display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .page-header {
@@ -156,12 +164,14 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
     
     .btn-new-task:hover {
       background: #222;
       border-color: #444;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
     
     /* Kanban Board */
@@ -197,7 +207,7 @@
       border-radius: 10px;
       padding: 16px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
       position: relative;
     }
     
@@ -205,6 +215,15 @@
       background: #0f0f0f;
       border-color: #333;
       transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
+    }
+    
+    .task-card.priority-high {
+      border-left: 3px solid #f55;
+    }
+    
+    .task-card.priority-high:hover {
+      box-shadow: 0 4px 20px rgba(255, 85, 85, 0.2);
     }
     
     .task-card-title {
@@ -258,10 +277,13 @@
       align-items: center;
       justify-content: center;
       padding: 40px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
     
     .modal.show {
       display: flex;
+      opacity: 1;
     }
     
     .modal-content {
@@ -274,6 +296,12 @@
       max-height: 85vh;
       overflow-y: auto;
       position: relative;
+      animation: modalSlideIn 0.3s ease;
+    }
+    
+    @keyframes modalSlideIn {
+      from { transform: translateY(20px) scale(0.95); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
     }
     
     .modal-header {
@@ -338,6 +366,7 @@
       min-width: 150px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       z-index: 100;
+      animation: fadeIn 0.2s ease;
     }
     
     .action-menu-dropdown.show {
@@ -421,6 +450,152 @@
       min-height: 60px;
     }
     
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      background: #000;
+      border: 1px solid #1a1a1a;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: #333;
+      background: #0a0a0a;
+    }
+    
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-select {
+      cursor: pointer;
+    }
+    
+    /* Settings Sliders */
+    .slider-container {
+      margin-bottom: 24px;
+    }
+    
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    
+    .slider-label {
+      font-size: 13px;
+      color: #fff;
+      font-weight: 500;
+    }
+    
+    .slider-value {
+      font-size: 12px;
+      color: #666;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #1a1a1a;
+      outline: none;
+      -webkit-appearance: none;
+      transition: background 0.2s ease;
+    }
+    
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    
+    .slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    
+    .slider::-moz-range-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Toast Notifications */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 10px;
+      padding: 16px 20px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+      z-index: 2000;
+      animation: toastSlideIn 0.3s ease;
+      min-width: 250px;
+    }
+    
+    .toast.success {
+      border-left: 3px solid #0f0;
+    }
+    
+    .toast.error {
+      border-left: 3px solid #f55;
+    }
+    
+    @keyframes toastSlideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes toastSlideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(400px); opacity: 0; }
+    }
+    
+    .toast.removing {
+      animation: toastSlideOut 0.3s ease;
+    }
+    
     .activity-log {
       background: #000;
       border: 1px solid #1a1a1a;
@@ -468,7 +643,7 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
       border: 1px solid;
       text-transform: none;
       letter-spacing: 0;
@@ -495,6 +670,14 @@
     .btn-primary:hover {
       background: #e0e0e0;
       border-color: #e0e0e0;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+    
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
     }
     
     .loading {
@@ -526,13 +709,14 @@
       border-radius: 10px;
       padding: 16px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
     }
     
     .data-card:hover {
       background: #0f0f0f;
       border-color: #333;
       transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
     }
     
     .data-card-title {
@@ -569,6 +753,29 @@
       background: rgba(255, 0, 0, 0.1);
       color: #f55;
       border: 1px solid rgba(255, 0, 0, 0.2);
+    }
+    
+    .settings-grid {
+      display: grid;
+      gap: 24px;
+    }
+    
+    .settings-section {
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.2s ease;
+    }
+    
+    .settings-section:hover {
+      border-color: #222;
+    }
+    
+    .settings-section h3 {
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #fff;
     }
     
     @media (max-width: 1400px) {
@@ -652,7 +859,7 @@
       <div id="tasks-page" class="page active">
         <div class="page-header">
           <h1 class="page-title">Tasks</h1>
-          <button class="btn-new-task">+ New Task</button>
+          <button class="btn-new-task" onclick="openNewTaskModal()">+ New Task</button>
         </div>
         
         <div id="tasks-loading" class="loading">Loading tasks...</div>
@@ -665,6 +872,7 @@
       <div id="agents-page" class="page">
         <div class="page-header">
           <h1 class="page-title">Agents</h1>
+          <button class="btn-new-task" onclick="openNewAgentModal()">+ Add Agent</button>
         </div>
         <div id="agents-loading" class="loading">Loading agents...</div>
         <div id="agents-content" class="data-grid" style="display: none;"></div>
@@ -675,6 +883,7 @@
       <div id="schedule-page" class="page">
         <div class="page-header">
           <h1 class="page-title">Schedule</h1>
+          <button class="btn-new-task" onclick="openNewCronModal()">+ New Cron</button>
         </div>
         <div id="schedule-loading" class="loading">Loading schedule...</div>
         <div id="schedule-content" class="data-grid" style="display: none;"></div>
@@ -687,40 +896,20 @@
           <h1 class="page-title">Settings</h1>
         </div>
         <div id="settings-loading" class="loading">Loading settings...</div>
-        <div id="settings-content" style="display: none;"></div>
+        <div id="settings-content" class="settings-grid" style="display: none;"></div>
       </div>
     </div>
   </div>
   
   <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="modal-title"></h2>
-        <div class="modal-actions-top">
-          <div class="action-menu">
-            <button class="action-menu-btn" onclick="toggleActionMenu(event)">⋯</button>
-            <div class="action-menu-dropdown" id="action-menu">
-              <div class="action-menu-item" onclick="hideTask()">Hide Task</div>
-              <div class="action-menu-item danger" onclick="deleteTask()">Delete Task</div>
-            </div>
-          </div>
-          <button class="modal-close" onclick="closeModal()">×</button>
-        </div>
-      </div>
-      <div class="modal-body" id="modal-body"></div>
-      <div class="modal-footer" id="modal-footer">
-        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-        <button class="btn btn-primary" onclick="executeTask()">Execute Task</button>
-      </div>
-    </div>
-  </div>
+  <div id="modal" class="modal"></div>
   
   <script>
     let allTasks = [];
     let allJobs = [];
     let allAgents = [];
     let currentModalItem = null;
+    let currentSettings = null;
     
     // Navigation
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -747,11 +936,59 @@
       { id: 'completed', title: 'Completed' }
     ];
     
+    // Toast notifications
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.add('removing');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+    
+    // Auto-prioritization logic
+    function autoPrioritize(task) {
+      const title = task.title.toLowerCase();
+      const desc = task.description.toLowerCase();
+      
+      // Keywords that indicate high priority
+      const highPriorityKeywords = [
+        'urgent', 'critical', 'asap', 'emergency', 'blocker',
+        'production', 'security', 'bug', 'crash', 'broken',
+        'deadline', 'important', 'high priority'
+      ];
+      
+      const hasHighPriorityKeyword = highPriorityKeywords.some(keyword => 
+        title.includes(keyword) || desc.includes(keyword)
+      );
+      
+      if (hasHighPriorityKeyword && task.priority !== 'high') {
+        return 'high';
+      }
+      
+      return task.priority || 'medium';
+    }
+    
+    // Load tasks
     async function loadTasks() {
       try {
         const response = await fetch('/data/tasks.json');
         const data = await response.json();
         allTasks = data.tasks || [];
+        
+        // Auto-prioritize tasks
+        let updated = false;
+        allTasks = allTasks.map(task => {
+          const newPriority = autoPrioritize(task);
+          if (newPriority !== task.priority) {
+            task.priority = newPriority;
+            updated = true;
+          }
+          return task;
+        });
         
         document.getElementById('tasks-loading').style.display = 'none';
         document.getElementById('tasks-content').style.display = 'block';
@@ -774,7 +1011,7 @@
             <div class="column-header">${column.title}</div>
             <div class="task-list">
               ${columnTasks.map(task => `
-                <div class="task-card" onclick="showTaskDetail('${task.id}')">
+                <div class="task-card ${task.priority === 'high' ? 'priority-high' : ''}" onclick="showTaskDetail('${task.id}')">
                   <div class="task-card-title">${task.title}</div>
                   <div class="task-card-desc">${task.description}</div>
                   <div class="task-card-footer">
@@ -792,54 +1029,338 @@
       }).join('');
     }
     
+    // New Task Modal
+    function openNewTaskModal() {
+      const modalHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">New Task</h2>
+            <button class="modal-close" onclick="closeModal()">×</button>
+          </div>
+          <div class="modal-body">
+            <form id="new-task-form" onsubmit="createTask(event)">
+              <div class="form-group">
+                <label class="form-label">Title *</label>
+                <input type="text" class="form-input" id="task-title" required placeholder="Enter task title">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Description *</label>
+                <textarea class="form-textarea" id="task-description" required placeholder="Describe the task..."></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Priority</label>
+                <select class="form-select" id="task-priority">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="document.getElementById('new-task-form').requestSubmit()">Create Task</button>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('modal').innerHTML = modalHTML;
+      document.getElementById('modal').classList.add('show');
+    }
+    
+    async function createTask(event) {
+      event.preventDefault();
+      
+      const title = document.getElementById('task-title').value.trim();
+      const description = document.getElementById('task-description').value.trim();
+      const priority = document.getElementById('task-priority').value;
+      
+      if (!title || !description) {
+        showToast('Please fill in all required fields', 'error');
+        return;
+      }
+      
+      try {
+        const response = await fetch('/api/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, description, priority })
+        });
+        
+        if (!response.ok) throw new Error('Failed to create task');
+        
+        const result = await response.json();
+        showToast('Task created successfully! Selden has been notified.', 'success');
+        closeModal();
+        loadTasks();
+      } catch (error) {
+        showToast('Error: ' + error.message, 'error');
+      }
+    }
+    
+    // New Agent Modal
+    function openNewAgentModal() {
+      const modalHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Add Agent</h2>
+            <button class="modal-close" onclick="closeModal()">×</button>
+          </div>
+          <div class="modal-body">
+            <form id="new-agent-form" onsubmit="createAgent(event)">
+              <div class="form-group">
+                <label class="form-label">Agent ID *</label>
+                <input type="text" class="form-input" id="agent-id" required placeholder="unique-agent-id">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Label *</label>
+                <input type="text" class="form-input" id="agent-label" required placeholder="Friendly name">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Kind</label>
+                <select class="form-select" id="agent-kind">
+                  <option value="main">Main</option>
+                  <option value="subagent">Subagent</option>
+                  <option value="worker">Worker</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Channel</label>
+                <select class="form-select" id="agent-channel">
+                  <option value="telegram">Telegram</option>
+                  <option value="discord">Discord</option>
+                  <option value="cli">CLI</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="document.getElementById('new-agent-form').requestSubmit()">Add Agent</button>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('modal').innerHTML = modalHTML;
+      document.getElementById('modal').classList.add('show');
+    }
+    
+    function createAgent(event) {
+      event.preventDefault();
+      // Note: The API doesn't support adding agents, but UI is ready
+      showToast('Agent creation API not yet implemented', 'error');
+    }
+    
+    // New Cron Modal
+    function openNewCronModal() {
+      const modalHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">New Cron Job</h2>
+            <button class="modal-close" onclick="closeModal()">×</button>
+          </div>
+          <div class="modal-body">
+            <form id="new-cron-form" onsubmit="createCron(event)">
+              <div class="form-group">
+                <label class="form-label">Job Name *</label>
+                <input type="text" class="form-input" id="cron-name" required placeholder="Daily backup">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Schedule Type</label>
+                <select class="form-select" id="cron-type" onchange="updateCronScheduleFields()">
+                  <option value="cron">Cron Expression</option>
+                  <option value="every">Every X seconds</option>
+                  <option value="at">Specific date/time</option>
+                </select>
+              </div>
+              
+              <div class="form-group" id="cron-expr-group">
+                <label class="form-label">Cron Expression *</label>
+                <input type="text" class="form-input" id="cron-expr" placeholder="0 9 * * *">
+                <small style="color: #666; font-size: 11px; display: block; margin-top: 6px;">Format: minute hour day month weekday</small>
+              </div>
+              
+              <div class="form-group" id="cron-every-group" style="display: none;">
+                <label class="form-label">Interval (seconds) *</label>
+                <input type="number" class="form-input" id="cron-every" placeholder="3600">
+              </div>
+              
+              <div class="form-group" id="cron-at-group" style="display: none;">
+                <label class="form-label">Date & Time *</label>
+                <input type="datetime-local" class="form-input" id="cron-at">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Session Target</label>
+                <input type="text" class="form-input" id="cron-session" placeholder="isolated" value="isolated">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">Payload (JSON) *</label>
+                <textarea class="form-textarea" id="cron-payload" required placeholder='{"text": "Execute scheduled task"}'></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" id="cron-enabled" checked>
+                  <span class="form-label" style="margin: 0;">Enabled</span>
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="document.getElementById('new-cron-form').requestSubmit()">Create Cron</button>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('modal').innerHTML = modalHTML;
+      document.getElementById('modal').classList.add('show');
+    }
+    
+    function updateCronScheduleFields() {
+      const type = document.getElementById('cron-type').value;
+      document.getElementById('cron-expr-group').style.display = type === 'cron' ? 'block' : 'none';
+      document.getElementById('cron-every-group').style.display = type === 'every' ? 'block' : 'none';
+      document.getElementById('cron-at-group').style.display = type === 'at' ? 'block' : 'none';
+    }
+    
+    async function createCron(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('cron-name').value.trim();
+      const type = document.getElementById('cron-type').value;
+      const sessionTarget = document.getElementById('cron-session').value.trim();
+      const enabled = document.getElementById('cron-enabled').checked;
+      const payloadText = document.getElementById('cron-payload').value.trim();
+      
+      // Build schedule object
+      let schedule = { kind: type };
+      
+      if (type === 'cron') {
+        schedule.expr = document.getElementById('cron-expr').value.trim();
+        if (!schedule.expr) {
+          showToast('Please enter a cron expression', 'error');
+          return;
+        }
+      } else if (type === 'every') {
+        const everyMs = parseInt(document.getElementById('cron-every').value);
+        if (!everyMs || everyMs <= 0) {
+          showToast('Please enter a valid interval', 'error');
+          return;
+        }
+        schedule.everyMs = everyMs * 1000;
+      } else if (type === 'at') {
+        const atValue = document.getElementById('cron-at').value;
+        if (!atValue) {
+          showToast('Please select a date and time', 'error');
+          return;
+        }
+        schedule.at = new Date(atValue).toISOString();
+      }
+      
+      // Parse payload
+      let payload;
+      try {
+        payload = JSON.parse(payloadText);
+      } catch (e) {
+        showToast('Invalid JSON payload', 'error');
+        return;
+      }
+      
+      try {
+        const response = await fetch('/api/cron/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, schedule, sessionTarget, enabled, payload })
+        });
+        
+        if (!response.ok) throw new Error('Failed to create cron job');
+        
+        showToast('Cron job created successfully!', 'success');
+        closeModal();
+        if (window.scheduleLoaded) loadSchedule();
+      } catch (error) {
+        showToast('Error: ' + error.message, 'error');
+      }
+    }
+    
     function showTaskDetail(taskId) {
       const task = allTasks.find(t => t.id === taskId);
       if (!task) return;
       
       currentModalItem = { type: 'task', data: task };
       
-      document.getElementById('modal-title').textContent = task.title;
-      document.getElementById('modal-body').innerHTML = `
-        <div class="detail-section">
-          <div class="detail-label">Status</div>
-          <div class="detail-value">${task.status.replace('_', ' ').toUpperCase()}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Description</div>
-          <div class="detail-value description">${task.description}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Created</div>
-          <div class="detail-value">${formatDateTime(task.createdAt)}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Last Updated</div>
-          <div class="detail-value">${formatDateTime(task.updatedAt)}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Activity Log</div>
-          <div class="activity-log">
-            <div class="activity-item">
-              <div class="activity-time">${formatDateTime(task.createdAt)}</div>
-              <div class="activity-text">Task created</div>
+      const modalHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">${task.title}</h2>
+            <div class="modal-actions-top">
+              <div class="action-menu">
+                <button class="action-menu-btn" onclick="toggleActionMenu(event)">⋯</button>
+                <div class="action-menu-dropdown" id="action-menu">
+                  <div class="action-menu-item" onclick="hideTask()">Hide Task</div>
+                  <div class="action-menu-item danger" onclick="deleteTask()">Delete Task</div>
+                </div>
+              </div>
+              <button class="modal-close" onclick="closeModal()">×</button>
             </div>
-            <div class="activity-item">
-              <div class="activity-time">${formatDateTime(task.updatedAt)}</div>
-              <div class="activity-text">Status: ${task.status.replace('_', ' ')}</div>
+          </div>
+          <div class="modal-body">
+            <div class="detail-section">
+              <div class="detail-label">Status</div>
+              <div class="detail-value">${task.status.replace(/_/g, ' ').toUpperCase()}</div>
             </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Priority</div>
+              <div class="detail-value">${task.priority ? task.priority.toUpperCase() : 'MEDIUM'}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Description</div>
+              <div class="detail-value description">${task.description}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Created</div>
+              <div class="detail-value">${formatDateTime(task.createdAt)}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Last Updated</div>
+              <div class="detail-value">${formatDateTime(task.updatedAt)}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Activity Log</div>
+              <div class="activity-log">
+                <div class="activity-item">
+                  <div class="activity-time">${formatDateTime(task.createdAt)}</div>
+                  <div class="activity-text">Task created</div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-time">${formatDateTime(task.updatedAt)}</div>
+                  <div class="activity-text">Status: ${task.status.replace(/_/g, ' ')}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="executeTask()">Execute Task</button>
           </div>
         </div>
       `;
       
-      document.getElementById('modal-footer').innerHTML = `
-        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-        <button class="btn btn-primary" onclick="executeTask()">Execute Task</button>
-      `;
-      
+      document.getElementById('modal').innerHTML = modalHTML;
       document.getElementById('modal').classList.add('show');
     }
     
@@ -849,39 +1370,46 @@
       
       currentModalItem = { type: 'job', data: job };
       
-      document.getElementById('modal-title').textContent = job.name || 'Cron Job';
-      document.getElementById('modal-body').innerHTML = `
-        <div class="detail-section">
-          <div class="detail-label">Job ID</div>
-          <div class="detail-value" style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px;">${job.id}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Schedule</div>
-          <div class="detail-value">${formatSchedule(job.schedule)}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Session Target</div>
-          <div class="detail-value">${job.sessionTarget || 'N/A'}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Status</div>
-          <div class="detail-value">${job.enabled ? 'ENABLED' : 'DISABLED'}</div>
-        </div>
-        
-        <div class="detail-section">
-          <div class="detail-label">Payload</div>
-          <div class="detail-value" style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; white-space: pre-wrap;">${JSON.stringify(job.payload, null, 2)}</div>
+      const modalHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">${job.name || 'Cron Job'}</h2>
+            <button class="modal-close" onclick="closeModal()">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="detail-section">
+              <div class="detail-label">Job ID</div>
+              <div class="detail-value" style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px;">${job.id}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Schedule</div>
+              <div class="detail-value">${formatSchedule(job.schedule)}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Session Target</div>
+              <div class="detail-value">${job.sessionTarget || 'N/A'}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Status</div>
+              <div class="detail-value">${job.enabled ? 'ENABLED' : 'DISABLED'}</div>
+            </div>
+            
+            <div class="detail-section">
+              <div class="detail-label">Payload</div>
+              <div class="detail-value" style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; white-space: pre-wrap;">${JSON.stringify(job.payload, null, 2)}</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="deleteJob()">Delete Job</button>
+          </div>
         </div>
       `;
       
-      document.getElementById('modal-footer').innerHTML = `
-        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-        <button class="btn btn-primary" onclick="deleteJob()">Delete Job</button>
-      `;
-      
+      document.getElementById('modal').innerHTML = modalHTML;
       document.getElementById('modal').classList.add('show');
     }
     
@@ -893,20 +1421,30 @@
     
     function hideTask() {
       document.getElementById('action-menu').classList.remove('show');
-      alert('Hide task functionality coming soon');
+      showToast('Hide task functionality coming soon', 'error');
     }
     
-    function deleteTask() {
+    async function deleteTask() {
       document.getElementById('action-menu').classList.remove('show');
-      if (confirm('Delete this task permanently?')) {
-        alert('Delete task functionality coming soon');
+      
+      if (!currentModalItem || currentModalItem.type !== 'task') return;
+      if (!confirm('Delete this task permanently?')) return;
+      
+      try {
+        const response = await fetch(`/api/tasks/${currentModalItem.data.id}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Failed to delete');
+        
+        showToast('Task deleted successfully', 'success');
         closeModal();
+        loadTasks();
+      } catch (error) {
+        showToast('Error: ' + error.message, 'error');
       }
     }
     
     function executeTask() {
       if (currentModalItem && currentModalItem.type === 'task') {
-        alert('Execute task: ' + currentModalItem.data.title);
+        showToast('Execute task: ' + currentModalItem.data.title, 'success');
       }
     }
     
@@ -918,11 +1456,12 @@
       try {
         const response = await fetch(`/api/cron/jobs/${currentModalItem.data.id}`, { method: 'DELETE' });
         if (!response.ok) throw new Error('Failed to delete');
-        alert('Job deleted successfully');
+        
+        showToast('Job deleted successfully', 'success');
         closeModal();
         if (window.scheduleLoaded) loadSchedule();
       } catch (error) {
-        alert('Error: ' + error.message);
+        showToast('Error: ' + error.message, 'error');
       }
     }
     
@@ -947,7 +1486,7 @@
           <div class="data-card">
             <div class="data-card-title">${agent.label || agent.id}</div>
             <div class="data-card-meta">
-              ${agent.kind} • Created ${formatDate(agent.created)}
+              ${agent.channel || 'unknown'} • ${agent.sessionCount || 0} sessions
             </div>
           </div>
         `).join('');
@@ -994,43 +1533,154 @@
     async function loadSettings() {
       window.settingsLoaded = true;
       try {
-        const response = await fetch('/data/settings.json');
-        const settings = await response.json();
+        const response = await fetch('/api/settings');
+        currentSettings = await response.json();
         
         document.getElementById('settings-loading').style.display = 'none';
         const container = document.getElementById('settings-content');
-        container.style.display = 'block';
+        container.style.display = 'grid';
+        
+        // Ensure personality settings exist
+        if (!currentSettings.personality) {
+          currentSettings.personality = {
+            tone: 'professional',
+            verbosity: 'balanced',
+            humor: 'occasional',
+            formality: 'casual'
+          };
+        }
         
         container.innerHTML = `
-          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px;">
-            <div style="background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 12px; padding: 24px;">
-              <h3 style="margin-bottom: 20px; font-size: 16px;">Interface</h3>
-              <div style="display: grid; gap: 16px;">
-                ${Object.entries(settings.interface).map(([key, value]) => `
-                  <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1a1a1a;">
-                    <span style="color: #888;">${key.replace(/([A-Z])/g, ' $1').trim()}</span>
-                    <span style="color: #fff;">${value}</span>
-                  </div>
-                `).join('')}
+          <div class="settings-section">
+            <h3>Personality Tuning</h3>
+            
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">Tone</span>
+                <span class="slider-value" id="tone-value">${currentSettings.personality.tone}</span>
               </div>
+              <select class="form-select" id="tone-slider" onchange="updatePersonality('tone', this.value)">
+                <option value="professional" ${currentSettings.personality.tone === 'professional' ? 'selected' : ''}>Professional</option>
+                <option value="friendly" ${currentSettings.personality.tone === 'friendly' ? 'selected' : ''}>Friendly</option>
+                <option value="casual" ${currentSettings.personality.tone === 'casual' ? 'selected' : ''}>Casual</option>
+                <option value="enthusiastic" ${currentSettings.personality.tone === 'enthusiastic' ? 'selected' : ''}>Enthusiastic</option>
+              </select>
             </div>
             
-            <div style="background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 12px; padding: 24px;">
-              <h3 style="margin-bottom: 20px; font-size: 16px;">Cadence</h3>
-              <div style="display: grid; gap: 16px;">
-                ${Object.entries(settings.cadence).map(([key, value]) => `
-                  <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1a1a1a;">
-                    <span style="color: #888;">${key.replace(/([A-Z])/g, ' $1').trim()}</span>
-                    <span style="color: #fff;">${value}</span>
-                  </div>
-                `).join('')}
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">Verbosity</span>
+                <span class="slider-value" id="verbosity-value">${currentSettings.personality.verbosity}</span>
               </div>
+              <input type="range" min="0" max="100" value="${getVerbosityValue(currentSettings.personality.verbosity)}" 
+                class="slider" id="verbosity-slider" oninput="updateVerbosity(this.value)">
+            </div>
+            
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">Humor</span>
+                <span class="slider-value" id="humor-value">${currentSettings.personality.humor}</span>
+              </div>
+              <input type="range" min="0" max="100" value="${getHumorValue(currentSettings.personality.humor)}" 
+                class="slider" id="humor-slider" oninput="updateHumor(this.value)">
+            </div>
+            
+            <div class="slider-container">
+              <div class="slider-header">
+                <span class="slider-label">Formality</span>
+                <span class="slider-value" id="formality-value">${currentSettings.personality.formality}</span>
+              </div>
+              <input type="range" min="0" max="100" value="${getFormalityValue(currentSettings.personality.formality)}" 
+                class="slider" id="formality-slider" oninput="updateFormality(this.value)">
+            </div>
+            
+            <div style="margin-top: 24px;">
+              <button class="btn btn-primary" onclick="saveSettings()" style="width: 100%;">Save Changes</button>
+            </div>
+          </div>
+          
+          <div class="settings-section">
+            <h3>Interface</h3>
+            <div style="display: grid; gap: 16px;">
+              ${Object.entries(currentSettings.interface || {}).map(([key, value]) => `
+                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1a1a1a;">
+                  <span style="color: #888;">${key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                  <span style="color: #fff;">${value}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          
+          <div class="settings-section">
+            <h3>Cadence</h3>
+            <div style="display: grid; gap: 16px;">
+              ${Object.entries(currentSettings.cadence || {}).map(([key, value]) => `
+                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1a1a1a;">
+                  <span style="color: #888;">${key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                  <span style="color: #fff;">${value}</span>
+                </div>
+              `).join('')}
             </div>
           </div>
         `;
       } catch (error) {
         console.error('Error:', error);
         document.getElementById('settings-loading').textContent = 'ERROR: ' + error.message;
+      }
+    }
+    
+    // Personality slider helpers
+    function getVerbosityValue(verbosity) {
+      const map = { concise: 0, balanced: 50, detailed: 100 };
+      return map[verbosity] || 50;
+    }
+    
+    function getHumorValue(humor) {
+      const map = { none: 0, occasional: 50, frequent: 100 };
+      return map[humor] || 50;
+    }
+    
+    function getFormalityValue(formality) {
+      const map = { casual: 0, neutral: 50, formal: 100 };
+      return map[formality] || 0;
+    }
+    
+    function updatePersonality(key, value) {
+      currentSettings.personality[key] = value;
+      document.getElementById(`${key}-value`).textContent = value;
+    }
+    
+    function updateVerbosity(value) {
+      const verbosity = value < 33 ? 'concise' : value < 67 ? 'balanced' : 'detailed';
+      currentSettings.personality.verbosity = verbosity;
+      document.getElementById('verbosity-value').textContent = verbosity;
+    }
+    
+    function updateHumor(value) {
+      const humor = value < 33 ? 'none' : value < 67 ? 'occasional' : 'frequent';
+      currentSettings.personality.humor = humor;
+      document.getElementById('humor-value').textContent = humor;
+    }
+    
+    function updateFormality(value) {
+      const formality = value < 33 ? 'casual' : value < 67 ? 'neutral' : 'formal';
+      currentSettings.personality.formality = formality;
+      document.getElementById('formality-value').textContent = formality;
+    }
+    
+    async function saveSettings() {
+      try {
+        const response = await fetch('/api/settings', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentSettings)
+        });
+        
+        if (!response.ok) throw new Error('Failed to save settings');
+        
+        showToast('Settings saved successfully!', 'success');
+      } catch (error) {
+        showToast('Error: ' + error.message, 'error');
       }
     }
     
@@ -1058,7 +1708,9 @@
     
     function closeModal() {
       document.getElementById('modal').classList.remove('show');
-      document.getElementById('action-menu').classList.remove('show');
+      setTimeout(() => {
+        document.getElementById('modal').innerHTML = '';
+      }, 300);
       currentModalItem = null;
     }
     
@@ -1069,7 +1721,8 @@
     
     // Close action menu when clicking outside
     document.addEventListener('click', () => {
-      document.getElementById('action-menu').classList.remove('show');
+      const menu = document.getElementById('action-menu');
+      if (menu) menu.classList.remove('show');
     });
     
     // Initial load

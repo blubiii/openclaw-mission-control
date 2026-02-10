@@ -9,5 +9,11 @@
     "dailySummaryTime": "08:00",
     "quietHoursStart": "23:00",
     "quietHoursEnd": "08:00"
+  },
+  "personality": {
+    "tone": "professional",
+    "verbosity": "balanced",
+    "humor": "occasional",
+    "formality": "casual"
   }
 }
