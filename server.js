@@ -32,22 +32,63 @@ app.get('/api/agents', (req, res) => {
     const dirs = fs.readdirSync(SESSIONS_DIR);
     
     for (const dir of dirs) {
-      const sessionPath = path.join(SESSIONS_DIR, dir, 'session');
-      const metaFile = path.join(sessionPath, 'meta.json');
+      const sessionsFile = path.join(SESSIONS_DIR, dir, 'sessions', 'sessions.json');
       
-      if (fs.existsSync(metaFile)) {
+      if (fs.existsSync(sessionsFile)) {
         try {
-          const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'));
+          const sessionsData = JSON.parse(fs.readFileSync(sessionsFile, 'utf8'));
+          const sessionKeys = Object.keys(sessionsData);
+          
+          // Get the most recent session to extract metadata
+          let mostRecentSession = null;
+          let mostRecentTime = 0;
+          
+          for (const key of sessionKeys) {
+            const session = sessionsData[key];
+            if (session.updatedAt > mostRecentTime) {
+              mostRecentTime = session.updatedAt;
+              mostRecentSession = session;
+            }
+          }
+          
+          if (mostRecentSession) {
+            agents.push({
+              id: dir,
+              label: mostRecentSession.origin?.label || dir,
+              sessionCount: sessionKeys.length,
+              lastActive: new Date(mostRecentTime).toISOString(),
+              channel: mostRecentSession.lastChannel || 'unknown'
+            });
+          } else {
+            // Agent exists but has no sessions
+            agents.push({
+              id: dir,
+              label: dir,
+              sessionCount: 0,
+              lastActive: null,
+              channel: 'none'
+            });
+          }
+        } catch (err) {
+          console.error(`Error reading ${sessionsFile}:`, err.message);
+          // Still add the agent even if we can't read sessions
           agents.push({
             id: dir,
-            kind: meta.kind || 'unknown',
-            label: meta.label || dir,
-            created: meta.createdAt,
-            updated: meta.updatedAt
+            label: dir,
+            sessionCount: 0,
+            lastActive: null,
+            channel: 'unknown'
           });
-        } catch (err) {
-          console.error(`Error reading ${metaFile}:`, err.message);
         }
+      } else {
+        // Agent directory exists but no sessions file
+        agents.push({
+          id: dir,
+          label: dir,
+          sessionCount: 0,
+          lastActive: null,
+          channel: 'none'
+        });
       }
     }
     
