@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LaboratoryOS • Control Center</title>
+  <title>LaboratoryOS</title>
   <style>
     * {
       margin: 0;
@@ -13,8 +13,8 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #0a0a0a;
-      color: #e8e8e8;
+      background: #fff;
+      color: #000;
       min-height: 100vh;
     }
     
@@ -25,44 +25,39 @@
     
     /* Sidebar */
     .sidebar {
-      width: 240px;
+      width: 200px;
       background: #000;
-      border-right: 1px solid #1a1a1a;
+      color: #fff;
       display: flex;
       flex-direction: column;
-      padding: 24px 0;
+      border-right: 1px solid #ddd;
     }
     
     .logo {
-      padding: 0 24px 24px;
-      border-bottom: 1px solid #1a1a1a;
-      margin-bottom: 16px;
+      padding: 24px 20px;
+      border-bottom: 1px solid #333;
     }
     
     .logo h1 {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 700;
-      color: #fff;
       margin-bottom: 4px;
     }
     
     .logo .subtitle {
       font-size: 11px;
-      color: #666;
+      color: #888;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 500;
+      letter-spacing: 0.05em;
     }
     
     .nav {
       flex: 1;
-      padding: 8px 16px;
+      padding: 16px 0;
     }
     
     .nav-item {
-      padding: 10px 16px;
-      margin-bottom: 4px;
-      border-radius: 6px;
+      padding: 12px 20px;
       cursor: pointer;
       font-size: 14px;
       font-weight: 500;
@@ -70,58 +65,34 @@
       transition: all 0.2s;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     
     .nav-item:hover {
-      background: #141414;
+      background: #111;
       color: #fff;
     }
     
     .nav-item.active {
-      background: #1a1a1a;
-      color: #fff;
+      background: #fff;
+      color: #000;
     }
     
     .nav-icon {
-      font-size: 16px;
-    }
-    
-    .system-status {
-      padding: 16px 24px;
-      border-top: 1px solid #1a1a1a;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: #6eff6e;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 600;
-    }
-    
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      background: #6eff6e;
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      width: 20px;
+      height: 20px;
     }
     
     /* Main Content */
     .main {
       flex: 1;
       overflow-y: auto;
-      padding: 32px 40px;
+      background: #f5f5f5;
     }
     
     .page {
       display: none;
+      padding: 32px 40px;
     }
     
     .page.active {
@@ -130,349 +101,211 @@
     
     .page-header {
       margin-bottom: 32px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #1a1a1a;
     }
     
     .page-title {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
-      color: #fff;
+      color: #000;
       margin-bottom: 8px;
     }
     
-    .page-description {
-      font-size: 14px;
-      color: #666;
-    }
-    
-    /* Tasks Page */
-    .tasks-grid {
+    /* Tasks Kanban Board */
+    .kanban-board {
       display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 16px;
+      margin-bottom: 48px;
     }
     
-    .task-card {
-      background: #141414;
-      border: 1px solid #222;
+    .kanban-column {
+      background: #fff;
       border-radius: 8px;
-      padding: 20px;
-      transition: all 0.2s;
+      border: 1px solid #ddd;
+      min-height: 400px;
     }
     
-    .task-card:hover {
-      border-color: #3a3a3a;
-    }
-    
-    .task-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: 12px;
-    }
-    
-    .task-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    
-    .task-description {
+    .column-header {
+      padding: 16px;
+      border-bottom: 2px solid #000;
+      font-weight: 700;
       font-size: 13px;
-      color: #888;
-      line-height: 1.5;
-    }
-    
-    .task-status {
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      white-space: nowrap;
     }
     
-    .status-in_progress { background: #1a2a3a; color: #6e9eff; }
-    .status-not_started { background: #1a1a1a; color: #888; }
-    .status-ready_to_review { background: #2a1a3a; color: #9e6eff; }
-    .status-pending_input { background: #3a2a1a; color: #ff9e6e; }
-    .status-completed { background: #1a3a1a; color: #6eff6e; }
-    
-    .task-meta {
-      display: flex;
-      gap: 16px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #1a1a1a;
-      font-size: 12px;
-      color: #666;
-    }
-    
-    .priority-high { color: #ff6e6e; }
-    .priority-medium { color: #ff9e6e; }
-    .priority-low { color: #888; }
-    
-    /* Agents Page */
-    .agents-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    
-    .agent-card {
-      background: #141414;
-      border: 1px solid #222;
-      border-radius: 8px;
-      padding: 24px;
-    }
-    
-    .agent-name {
-      font-size: 18px;
-      font-weight: 600;
+    .column-count {
+      float: right;
+      background: #000;
       color: #fff;
-      margin-bottom: 8px;
-    }
-    
-    .agent-type {
-      font-size: 12px;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 16px;
-    }
-    
-    .agent-stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 16px;
-    }
-    
-    .agent-stat {
-      background: #0a0a0a;
-      padding: 10px;
-      border-radius: 6px;
-    }
-    
-    .stat-label {
+      padding: 2px 8px;
+      border-radius: 10px;
       font-size: 11px;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 4px;
     }
     
-    .stat-value {
-      font-size: 18px;
-      font-weight: 600;
-      color: #fff;
-    }
-    
-    /* Crons Page */
-    .crons-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 20px;
-    }
-    
-    .cron-card {
-      background: #141414;
-      border: 1px solid #222;
-      border-radius: 8px;
-      padding: 24px;
-    }
-    
-    .cron-header {
+    .task-list {
+      padding: 12px;
       display: flex;
-      justify-content: space-between;
-      align-items: start;
-      margin-bottom: 18px;
+      flex-direction: column;
       gap: 12px;
     }
     
-    .cron-name {
-      font-size: 17px;
-      font-weight: 600;
-      color: #fff;
-      line-height: 1.3;
-      flex: 1;
-    }
-    
-    .cron-status {
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-    
-    .cron-enabled {
-      background: #0d1a0d;
-      border: 1px solid #1a3a1a;
-      color: #6eff6e;
-    }
-    
-    .cron-disabled {
-      background: #1a0d0d;
-      border: 1px solid #3a1a1a;
-      color: #ff6e6e;
-    }
-    
-    .cron-details {
-      margin-bottom: 16px;
-    }
-    
-    .detail-row {
-      display: flex;
-      margin-bottom: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    
-    .detail-label {
-      font-weight: 600;
-      color: #666;
-      min-width: 90px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-size: 11px;
-    }
-    
-    .detail-value {
-      color: #ccc;
-      flex: 1;
-      font-family: 'SF Mono', Monaco, Consolas, monospace;
-      font-size: 12px;
-    }
-    
-    .schedule-badge {
-      display: inline-block;
-      background: #0a0a0a;
-      border: 1px solid #2a2a2a;
-      color: #3a7bff;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-      font-family: 'SF Mono', Monaco, Consolas, monospace;
-    }
-    
-    .cron-actions {
-      display: flex;
-      gap: 10px;
-      padding-top: 18px;
-      border-top: 1px solid #1a1a1a;
-    }
-    
-    .btn {
-      flex: 1;
-      padding: 10px 18px;
-      border: 1px solid #2a2a2a;
+    .task-item {
+      background: #fafafa;
+      border: 1px solid #ddd;
       border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
+      padding: 12px;
       cursor: pointer;
       transition: all 0.2s;
-      background: #0a0a0a;
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
     
-    .btn:hover {
-      border-color: #3a3a3a;
-      background: #141414;
-      color: #fff;
+    .task-item:hover {
+      border-color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     
-    .btn-delete {
-      border-color: #3a1a1a;
-      color: #ff6e6e;
-    }
-    
-    .btn-delete:hover {
-      background: #1a0d0d;
-      border-color: #5a2a2a;
-    }
-    
-    /* Settings Page */
-    .settings-section {
-      background: #141414;
-      border: 1px solid #222;
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-    
-    .settings-title {
-      font-size: 18px;
+    .task-item-title {
+      font-size: 14px;
       font-weight: 600;
-      color: #fff;
-      margin-bottom: 16px;
+      color: #000;
+      margin-bottom: 6px;
+      line-height: 1.3;
     }
     
-    .setting-item {
+    .task-item-desc {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    
+    .task-item-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #1a1a1a;
+      font-size: 11px;
+      color: #888;
     }
     
-    .setting-item:last-child {
+    .task-priority {
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    
+    .priority-high {
+      background: #ffe0e0;
+      color: #d00;
+    }
+    
+    .priority-medium {
+      background: #fff4e0;
+      color: #c80;
+    }
+    
+    .priority-low {
+      background: #f0f0f0;
+      color: #666;
+    }
+    
+    /* Upcoming Jobs Section */
+    .upcoming-section {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #000;
+    }
+    
+    .jobs-list {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .job-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    
+    .job-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+    }
+    
+    .job-schedule {
+      font-size: 12px;
+      color: #666;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    
+    /* Settings Page */
+    .settings-grid {
+      display: grid;
+      gap: 24px;
+    }
+    
+    .settings-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .settings-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #000;
+    }
+    
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .setting-row:last-child {
       border-bottom: none;
     }
     
     .setting-label {
       font-size: 14px;
-      color: #ccc;
+      color: #333;
     }
     
     .setting-value {
-      font-family: 'SF Mono', Monaco, Consolas, monospace;
-      font-size: 13px;
-      color: #888;
+      font-size: 14px;
+      color: #666;
+      font-family: 'SF Mono', Monaco, monospace;
     }
     
     .loading {
       text-align: center;
-      color: #666;
-      font-size: 15px;
-      padding: 80px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    
-    .empty-state {
-      text-align: center;
-      padding: 80px 20px;
-      color: #666;
-    }
-    
-    .empty-state h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      padding: 60px;
       color: #888;
+      font-size: 14px;
     }
     
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      
-      .sidebar {
-        width: 100%;
-        height: auto;
-      }
-      
-      .crons-grid,
-      .agents-grid {
-        grid-template-columns: 1fr;
-      }
+    .empty {
+      text-align: center;
+      padding: 60px;
+      color: #888;
     }
   </style>
 </head>
@@ -481,33 +314,42 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="logo">
-        <h1>🧪 LaboratoryOS</h1>
+        <h1>LaboratoryOS</h1>
         <div class="subtitle">Control Center</div>
       </div>
       
       <nav class="nav">
         <div class="nav-item active" data-page="tasks">
-          <span class="nav-icon">📋</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
           Tasks
         </div>
         <div class="nav-item" data-page="agents">
-          <span class="nav-icon">🤖</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
           Agents
         </div>
-        <div class="nav-item" data-page="crons">
-          <span class="nav-icon">⏰</span>
-          Crons
+        <div class="nav-item" data-page="schedule">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Schedule
         </div>
         <div class="nav-item" data-page="settings">
-          <span class="nav-icon">⚙️</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6m-12.36.36l4.24-4.24m4.24-4.24l4.24-4.24"></path>
+          </svg>
           Settings
         </div>
       </nav>
-      
-      <div class="system-status">
-        <span class="status-dot"></span>
-        <span>System Online</span>
-      </div>
     </div>
     
     <!-- Main Content -->
@@ -515,15 +357,17 @@
       <!-- Tasks Page -->
       <div id="tasks-page" class="page active">
         <div class="page-header">
-          <h1 class="page-title">Tasks</h1>
-          <p class="page-description">Active work items and project tracking</p>
+          <h1 class="page-title">Tasks Board</h1>
         </div>
         
         <div id="tasks-loading" class="loading">Loading tasks...</div>
-        <div id="tasks-container" class="tasks-grid" style="display: none;"></div>
-        <div id="tasks-empty" class="empty-state" style="display: none;">
-          <h2>No Tasks</h2>
-          <p>No active tasks found.</p>
+        <div id="tasks-content" style="display: none;">
+          <div class="kanban-board" id="kanban-board"></div>
+          
+          <div class="upcoming-section">
+            <h2 class="section-title">Upcoming Cron Jobs</h2>
+            <div id="upcoming-jobs" class="jobs-list"></div>
+          </div>
         </div>
       </div>
       
@@ -531,41 +375,26 @@
       <div id="agents-page" class="page">
         <div class="page-header">
           <h1 class="page-title">Agents</h1>
-          <p class="page-description">Active AI agents and sub-sessions</p>
         </div>
-        
-        <div id="agents-loading" class="loading">Loading agents...</div>
-        <div id="agents-container" class="agents-grid" style="display: none;"></div>
-        <div id="agents-empty" class="empty-state" style="display: none;">
-          <h2>No Active Agents</h2>
-          <p>No agent sessions found.</p>
-        </div>
+        <div class="empty">No active agents</div>
       </div>
       
-      <!-- Crons Page -->
-      <div id="crons-page" class="page">
+      <!-- Schedule Page -->
+      <div id="schedule-page" class="page">
         <div class="page-header">
-          <h1 class="page-title">Cron Jobs</h1>
-          <p class="page-description">Scheduled automation and periodic tasks</p>
+          <h1 class="page-title">Schedule</h1>
         </div>
-        
-        <div id="crons-loading" class="loading">Loading jobs...</div>
-        <div id="crons-container" class="crons-grid" style="display: none;"></div>
-        <div id="crons-empty" class="empty-state" style="display: none;">
-          <h2>No Active Jobs</h2>
-          <p>No scheduled cron jobs found.</p>
-        </div>
+        <div id="schedule-loading" class="loading">Loading schedule...</div>
+        <div id="schedule-content" style="display: none;"></div>
       </div>
       
       <!-- Settings Page -->
       <div id="settings-page" class="page">
         <div class="page-header">
           <h1 class="page-title">Settings</h1>
-          <p class="page-description">System configuration and preferences</p>
         </div>
-        
         <div id="settings-loading" class="loading">Loading settings...</div>
-        <div id="settings-container" style="display: none;"></div>
+        <div id="settings-content" class="settings-grid" style="display: none;"></div>
       </div>
     </div>
   </div>
@@ -576,20 +405,25 @@
       item.addEventListener('click', () => {
         const pageName = item.dataset.page;
         
-        // Update nav
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         item.classList.add('active');
         
-        // Update pages
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(`${pageName}-page`).classList.add('active');
         
-        // Load data if not loaded
-        if (pageName === 'crons' && !window.cronsLoaded) loadCrons();
-        if (pageName === 'agents' && !window.agentsLoaded) loadAgents();
+        if (pageName === 'schedule' && !window.scheduleLoaded) loadSchedule();
         if (pageName === 'settings' && !window.settingsLoaded) loadSettings();
       });
     });
+    
+    // Column definitions
+    const columns = [
+      { id: 'not_started', title: 'Not Started', color: '#666' },
+      { id: 'in_progress', title: 'In Progress', color: '#0066cc' },
+      { id: 'ready_to_review', title: 'Ready to Review', color: '#9945ff' },
+      { id: 'pending_input', title: 'Pending Input', color: '#ff8800' },
+      { id: 'completed', title: 'Completed', color: '#00aa00' }
+    ];
     
     // Load Tasks
     async function loadTasks() {
@@ -599,108 +433,67 @@
         const tasks = data.tasks || [];
         
         document.getElementById('tasks-loading').style.display = 'none';
+        document.getElementById('tasks-content').style.display = 'block';
         
-        if (tasks.length === 0) {
-          document.getElementById('tasks-empty').style.display = 'block';
-        } else {
-          renderTasks(tasks);
-        }
+        renderKanban(tasks);
+        loadUpcomingJobs();
       } catch (error) {
         console.error('Error loading tasks:', error);
         document.getElementById('tasks-loading').textContent = 'ERROR: ' + error.message;
       }
     }
     
-    function renderTasks(tasks) {
-      const container = document.getElementById('tasks-container');
-      container.style.display = 'grid';
+    function renderKanban(tasks) {
+      const board = document.getElementById('kanban-board');
       
-      container.innerHTML = tasks.map(task => `
-        <div class="task-card">
-          <div class="task-header">
-            <div>
-              <div class="task-title">${task.title}</div>
-              <div class="task-description">${task.description}</div>
+      board.innerHTML = columns.map(column => {
+        const columnTasks = tasks.filter(t => t.status === column.id);
+        
+        return `
+          <div class="kanban-column">
+            <div class="column-header">
+              ${column.title}
+              <span class="column-count">${columnTasks.length}</span>
             </div>
-            <div class="task-status status-${task.status}">${task.status.replace('_', ' ')}</div>
+            <div class="task-list">
+              ${columnTasks.map(task => `
+                <div class="task-item">
+                  <div class="task-item-title">${task.title}</div>
+                  <div class="task-item-desc">${task.description}</div>
+                  <div class="task-item-meta">
+                    <span class="task-priority priority-${task.priority}">${task.priority}</span>
+                    <span>${new Date(task.updatedAt).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
           </div>
-          <div class="task-meta">
-            <span class="priority-${task.priority}">Priority: ${task.priority.toUpperCase()}</span>
-            <span>Updated: ${new Date(task.updatedAt).toLocaleDateString()}</span>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
     
-    // Load Agents
-    async function loadAgents() {
-      window.agentsLoaded = true;
-      try {
-        document.getElementById('agents-loading').style.display = 'none';
-        document.getElementById('agents-empty').style.display = 'block';
-      } catch (error) {
-        console.error('Error loading agents:', error);
-      }
-    }
-    
-    // Load Crons
-    let crons = [];
-    async function loadCrons() {
-      window.cronsLoaded = true;
+    async function loadUpcomingJobs() {
       try {
         const response = await fetch('/api/cron/jobs');
         const data = await response.json();
-        crons = data.jobs || [];
+        const jobs = (data.jobs || []).filter(j => j.enabled).slice(0, 5);
         
-        document.getElementById('crons-loading').style.display = 'none';
+        const container = document.getElementById('upcoming-jobs');
         
-        if (crons.length === 0) {
-          document.getElementById('crons-empty').style.display = 'block';
-        } else {
-          renderCrons();
+        if (jobs.length === 0) {
+          container.innerHTML = '<div class="empty">No upcoming jobs</div>';
+          return;
         }
+        
+        container.innerHTML = jobs.map(job => `
+          <div class="job-item">
+            <span class="job-name">${job.name || 'Unnamed Job'}</span>
+            <span class="job-schedule">${formatSchedule(job.schedule)}</span>
+          </div>
+        `).join('');
       } catch (error) {
-        console.error('Error loading crons:', error);
-        document.getElementById('crons-loading').textContent = 'ERROR: ' + error.message;
+        console.error('Error loading jobs:', error);
       }
-    }
-    
-    function renderCrons() {
-      const container = document.getElementById('crons-container');
-      container.style.display = 'grid';
-      
-      container.innerHTML = crons.map(job => `
-        <div class="cron-card">
-          <div class="cron-header">
-            <div class="cron-name">${job.name || 'Unnamed Job'}</div>
-            <div class="cron-status ${job.enabled ? 'cron-enabled' : 'cron-disabled'}">
-              ${job.enabled ? 'Active' : 'Disabled'}
-            </div>
-          </div>
-          
-          <div class="cron-details">
-            <div class="detail-row">
-              <span class="detail-label">ID</span>
-              <span class="detail-value">${job.id}</span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Schedule</span>
-              <span class="detail-value">
-                <span class="schedule-badge">${formatSchedule(job.schedule)}</span>
-              </span>
-            </div>
-            <div class="detail-row">
-              <span class="detail-label">Session</span>
-              <span class="detail-value">${job.sessionTarget || 'N/A'}</span>
-            </div>
-          </div>
-          
-          <div class="cron-actions">
-            <button class="btn" onclick="alert('View details: ' + '${job.id}')">View</button>
-            <button class="btn btn-delete" onclick="deleteCron('${job.id}')">Delete</button>
-          </div>
-        </div>
-      `).join('');
     }
     
     function formatSchedule(schedule) {
@@ -708,22 +501,45 @@
       if (schedule.kind === 'cron') return schedule.expr;
       if (schedule.kind === 'every') return `Every ${schedule.everyMs / 1000}s`;
       if (schedule.kind === 'at') return new Date(schedule.at).toLocaleString();
-      return JSON.stringify(schedule);
+      return 'Unknown';
     }
     
-    async function deleteCron(jobId) {
-      if (!confirm('Delete this job? A backup will be created.')) return;
-      
+    async function loadSchedule() {
+      window.scheduleLoaded = true;
       try {
-        const response = await fetch(`/api/cron/jobs/${jobId}`, { method: 'DELETE' });
-        if (!response.ok) throw new Error('Failed to delete job');
-        await loadCrons();
+        const response = await fetch('/api/cron/jobs');
+        const data = await response.json();
+        const jobs = data.jobs || [];
+        
+        document.getElementById('schedule-loading').style.display = 'none';
+        const container = document.getElementById('schedule-content');
+        container.style.display = 'block';
+        
+        if (jobs.length === 0) {
+          container.innerHTML = '<div class="empty">No scheduled jobs</div>';
+          return;
+        }
+        
+        container.innerHTML = `
+          <div class="settings-card">
+            ${jobs.map(job => `
+              <div class="job-item">
+                <div>
+                  <div class="job-name">${job.name || 'Unnamed Job'}</div>
+                  <div style="font-size: 12px; color: #888; margin-top: 4px;">
+                    ${job.enabled ? '✓ Enabled' : '✗ Disabled'} • ${formatSchedule(job.schedule)}
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
       } catch (error) {
-        alert('Error: ' + error.message);
+        console.error('Error:', error);
+        document.getElementById('schedule-loading').textContent = 'ERROR: ' + error.message;
       }
     }
     
-    // Load Settings
     async function loadSettings() {
       window.settingsLoaded = true;
       try {
@@ -731,45 +547,44 @@
         const settings = await response.json();
         
         document.getElementById('settings-loading').style.display = 'none';
-        
-        const container = document.getElementById('settings-container');
-        container.style.display = 'block';
+        const container = document.getElementById('settings-content');
+        container.style.display = 'grid';
         
         container.innerHTML = `
-          <div class="settings-section">
-            <h2 class="settings-title">Interface</h2>
-            <div class="setting-item">
+          <div class="settings-card">
+            <h3 class="settings-card-title">Interface</h3>
+            <div class="setting-row">
               <span class="setting-label">Proactive Mode</span>
               <span class="setting-value">${settings.interface.proactiveMode ? 'Enabled' : 'Disabled'}</span>
             </div>
-            <div class="setting-item">
+            <div class="setting-row">
               <span class="setting-label">Notification Style</span>
               <span class="setting-value">${settings.interface.notificationStyle}</span>
             </div>
-            <div class="setting-item">
+            <div class="setting-row">
               <span class="setting-label">Response Length</span>
               <span class="setting-value">${settings.interface.responseLength}</span>
             </div>
           </div>
           
-          <div class="settings-section">
-            <h2 class="settings-title">Cadence</h2>
-            <div class="setting-item">
+          <div class="settings-card">
+            <h3 class="settings-card-title">Cadence</h3>
+            <div class="setting-row">
               <span class="setting-label">Heartbeat Interval</span>
-              <span class="setting-value">${settings.cadence.heartbeatInterval} minutes</span>
+              <span class="setting-value">${settings.cadence.heartbeatInterval} min</span>
             </div>
-            <div class="setting-item">
-              <span class="setting-label">Daily Summary Time</span>
+            <div class="setting-row">
+              <span class="setting-label">Daily Summary</span>
               <span class="setting-value">${settings.cadence.dailySummaryTime}</span>
             </div>
-            <div class="setting-item">
+            <div class="setting-row">
               <span class="setting-label">Quiet Hours</span>
               <span class="setting-value">${settings.cadence.quietHoursStart} - ${settings.cadence.quietHoursEnd}</span>
             </div>
           </div>
         `;
       } catch (error) {
-        console.error('Error loading settings:', error);
+        console.error('Error:', error);
         document.getElementById('settings-loading').textContent = 'ERROR: ' + error.message;
       }
     }
